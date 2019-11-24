@@ -1,0 +1,123 @@
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@dandeiro1992
+
+1
+0
+
+    0
+
+dandeiro1992/Klasy-C-
+Code
+Issues 0
+Pull requests 0
+Actions
+Projects 0
+Wiki
+Security
+Insights
+Settings
+Klasy-C-/klasy/.gitignore
+@dandeiro1992 dandeiro1992 zabawa gitem - usuniecie folderu debug 099cdd0 9 days ago
+74 lines (65 sloc) 794 Bytes
+# This file is used to ignore files which are generated
+# ----------------------------------------------------------------------------
+
+*~
+*.autosave
+*.a
+*.core
+*.moc
+*.o
+*.obj
+*.orig
+*.rej
+*.so
+*.so.*
+*_pch.h.cpp
+*_resource.rc
+*.qm
+.#*
+*.*#
+core
+!core/
+tags
+.DS_Store
+.directory
+*.debug
+Makefile*
+*.prl
+*.app
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+Thumbs.db
+*.res
+*.rc
+/.qmake.cache
+/.qmake.stash
+
+# qtcreator generated files
+*.pro.user*
+
+# xemacs temporary files
+*.flc
+
+# Vim temporary files
+.*.swp
+
+# Visual Studio generated files
+*.ib_pdb_index
+*.idb
+*.ilk
+*.pdb
+*.sln
+*.suo
+*.vcproj
+*vcproj.*.*.user
+*.ncb
+*.sdf
+*.opensdf
+*.vcxproj
+*vcxproj.*
+
+# MinGW generated files
+*.Debug
+*.Release
+
+# Python byte code
+*.pyc
+
+build-klasy-Desktop_x86_windows_msys_pe_64bit-Debug/
+Debug/
+output_files/
+incremental_db/
+db/
+modelsim/
+*.bak
+*.qws
+*.qsf
+
+# Binaries
+# --------
+*.dll
+*.exe
+
+    © 2019 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Status
+    Help
+
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
+

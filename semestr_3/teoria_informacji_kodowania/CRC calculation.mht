@@ -1,0 +1,904 @@
+From: <Zapisane przez program Windows Internet Explorer 7>
+Subject: CRC calculation
+Date: Wed, 19 Mar 2008 14:38:00 +0100
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.zorc.breitbandkatze.de/crc.html
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>CRC calculation</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dwindows-1250">
+<META content=3D"Sven Reifegerste" name=3Dauthor>
+<META=20
+content=3D"crc16, crc32, crc, calculator, crc-calculator, crctester.c, =
+crctester, crc-tester"=20
+name=3Dkeywords>
+<SCRIPT language=3DJavaScript>=0A=
+<!--=0A=
+function resetform()=0A=
+{=0A=
+  clrpar();=0A=
+  setparcrc32();=0A=
+  document.crcform.data.value=3D"123456789";=0A=
+}=0A=
+=0A=
+function clrpar()=0A=
+{=0A=
+  document.crcform.order.value=3D"";=0A=
+  document.crcform.polynom.value=3D"";=0A=
+  document.crcform.init.value=3D"";=0A=
+  document.crcform.xor.value=3D"";=0A=
+  document.crcform.result.value=3D"";=0A=
+  document.crcform.reflect[0].checked =3D false;=0A=
+  document.crcform.reflect[1].checked =3D false;=0A=
+  document.crcform.crcinittype[0].checked=3Dtrue;=0A=
+  document.crcform.crcinittype[1].checked=3Dfalse;=0A=
+  setfocus(document.crcform.order);=0A=
+}=0A=
+=0A=
+function setparcrcccitt()=0A=
+{=0A=
+  document.crcform.order.value=3D"16";=0A=
+  document.crcform.polynom.value=3D"1021";=0A=
+  document.crcform.init.value=3D"FFFF";=0A=
+  document.crcform.xor.value=3D"0";=0A=
+  document.crcform.reflect[0].checked =3D false;=0A=
+  document.crcform.reflect[1].checked =3D false;=0A=
+  document.crcform.crcinittype[0].checked=3Dfalse;=0A=
+  document.crcform.crcinittype[1].checked=3Dtrue;=0A=
+  setfocus(document.crcform.data);=0A=
+}=0A=
+=0A=
+function setparcrc16()=0A=
+{=0A=
+  document.crcform.order.value=3D"16";=0A=
+  document.crcform.polynom.value=3D"8005";=0A=
+  document.crcform.init.value=3D"0";=0A=
+  document.crcform.xor.value=3D"0";=0A=
+  document.crcform.reflect[0].checked =3D true;=0A=
+  document.crcform.reflect[1].checked =3D true;=0A=
+  document.crcform.crcinittype[0].checked=3Dfalse;=0A=
+  document.crcform.crcinittype[1].checked=3Dtrue;=0A=
+  setfocus(document.crcform.data);=0A=
+}=0A=
+=0A=
+function setparcrc32()=0A=
+{=0A=
+  document.crcform.order.value=3D"32";=0A=
+  document.crcform.polynom.value=3D"4C11DB7";=0A=
+  document.crcform.init.value=3D"FFFFFFFF";=0A=
+  document.crcform.xor.value=3D"FFFFFFFF";=0A=
+  document.crcform.reflect[0].checked =3D true;=0A=
+  document.crcform.reflect[1].checked =3D true;=0A=
+  document.crcform.crcinittype[0].checked=3Dfalse;=0A=
+  document.crcform.crcinittype[1].checked=3Dtrue;=0A=
+  setfocus(document.crcform.data);=0A=
+}=0A=
+=0A=
+function clrdata()=0A=
+{=0A=
+  document.crcform.data.value=3D"";=0A=
+  setfocus(document.crcform.data);=0A=
+}=0A=
+=0A=
+=0A=
+function setfocus(crsr)=0A=
+{=0A=
+  crsr.focus();=0A=
+  crsr.select();=0A=
+}=0A=
+=0A=
+=0A=
+function compute()=0A=
+{=0A=
+  // computes crc value=0A=
+=0A=
+  var i;=0A=
+  var j;=0A=
+  var k;=0A=
+  var bit;=0A=
+  var datalen;=0A=
+  var len;=0A=
+  var actchar;=0A=
+  var flag;=0A=
+  var counter;=0A=
+  var c;=0A=
+  var crc =3D new Array (8+1);=0A=
+  var mask =3D new Array (8);=0A=
+  var hexnum =3D new Array =
+("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F");=0A=
+=0A=
+  var data;=0A=
+  var order;=0A=
+  var polynom =3D new Array (8);=0A=
+  var init =3D new Array (8);=0A=
+  var xor =3D new Array (8);=0A=
+=0A=
+=0A=
+  // check if all entries are present=0A=
+=0A=
+  if (document.crcform.order.value =3D=3D "" || =
+document.crcform.polynom.value =3D=3D "" ||=0A=
+      document.crcform.init.value =3D=3D "" || =
+document.crcform.xor.value =3D=3D "") =0A=
+  {=0A=
+    document.crcform.result.value=3D "Invalid parameters";=0A=
+    return;=0A=
+  }=0A=
+=0A=
+=0A=
+  // convert crc order=0A=
+=0A=
+  order=3DparseInt(document.crcform.order.value, 10);=0A=
+  if (isNaN(order) =3D=3D true || order<1 || order>64)=0A=
+  {=0A=
+    document.crcform.result.value =3D "CRC order must be between 1 and =
+64";=0A=
+    return;=0A=
+  }=0A=
+=0A=
+=0A=
+  // convert crc polynom=0A=
+=0A=
+  polynom =3D convertentry (document.crcform.polynom.value, order);=0A=
+  if (polynom[0]<0)=0A=
+  {=0A=
+    document.crcform.result.value =3D "Invalid CRC polynom";=0A=
+    return;=0A=
+  }=0A=
+=0A=
+=0A=
+  // check if polynom is valid (bit 0 must be set)=0A=
+  =0A=
+//  if (!(polynom[7]&1))=0A=
+//  {=0A=
+//    document.crcform.result.value =3D "CRC polynom LSB must be set";=0A=
+//    return;=0A=
+//  }=0A=
+  =0A=
+=0A=
+  // convert crc init value=0A=
+=0A=
+  init =3D convertentry (document.crcform.init.value, order);=0A=
+  if (init[0]<0)=0A=
+  {=0A=
+    document.crcform.result.value =3D "Invalid initial value";=0A=
+    return;=0A=
+  }=0A=
+=0A=
+=0A=
+  // convert crc xor value=0A=
+=0A=
+  xor =3D convertentry (document.crcform.xor.value, order);=0A=
+  if (xor[0]<0)=0A=
+  {=0A=
+    document.crcform.result.value =3D "Invalid XOR value";=0A=
+    return;=0A=
+  }=0A=
+=0A=
+=0A=
+  // generate bit mask=0A=
+=0A=
+  counter =3D order;=0A=
+  for (i=3D7; i>=3D0; i--)=0A=
+  {=0A=
+    if (counter>=3D8) mask[i] =3D 255;=0A=
+    else mask[i]=3D(1<<counter)-1;=0A=
+    counter-=3D8;=0A=
+    if (counter<0) counter=3D0;=0A=
+  }=0A=
+=0A=
+  crc =3D init;=0A=
+=0A=
+  if (document.crcform.crcinittype[0].checked)		// nondirect -> direct=0A=
+  {=0A=
+    crc[8] =3D 0;=0A=
+=0A=
+    for (i=3D0; i<order; i++)=0A=
+    {=0A=
+      bit =3D crc[7-((order-1)>>3)] & (1<<((order-1)&7));=0A=
+      for (k=3D0; k<8; k++) {=0A=
+        crc[k] =3D ((crc [k] << 1) | (crc [k+1] >> 7)) & mask [k];=0A=
+        if (bit) crc[k]^=3D polynom[k];=0A=
+      }=0A=
+    }=0A=
+  }=0A=
+=0A=
+=0A=
+//  data =3D unescape(document.crcform.data.value);=0A=
+  data =3D document.crcform.data.value;=0A=
+  datalen =3D data.length;=0A=
+  len=3D0;                     // number of data bytes=0A=
+=0A=
+  crc[8]=3D0;=0A=
+=0A=
+=0A=
+  // main loop, algorithm is fast bit by bit type=0A=
+=0A=
+  for (i=3D0; i<datalen; i++)=0A=
+  {=0A=
+    c =3D data.charCodeAt(i);=0A=
+    if (data.charAt(i)=3D=3D'%')				// unescape byte by byte (%00 =
+allowed)=0A=
+    {=0A=
+      if (i>datalen-3)   =0A=
+        {=0A=
+        document.crcform.result.value =3D "Invalid data sequence";=0A=
+        return;=0A=
+        }=0A=
+      ch =3D parseInt(data.charAt(++i), 16);=0A=
+      if (isNaN(ch) =3D=3D true)=0A=
+        {=0A=
+        document.crcform.result.value =3D "Invalid data sequence";=0A=
+        return;=0A=
+        }=0A=
+      c =3D parseInt(data.charAt(++i), 16);=0A=
+      if (isNaN(c) =3D=3D true)=0A=
+        {=0A=
+        document.crcform.result.value =3D "Invalid data sequence";=0A=
+        return;=0A=
+        }=0A=
+      c =3D (c&15) | ((ch&15)<<4);=0A=
+    }=0A=
+=0A=
+=0A=
+    // perform revin=0A=
+=0A=
+    if (document.crcform.reflect[0].checked)=0A=
+      c =3D reflectByte(c);=0A=
+=0A=
+    // rotate one data byte including crcmask=0A=
+=0A=
+    for (j=3D0; j<8; j++)=0A=
+    {=0A=
+      bit=3D0;=0A=
+      if (crc[7-((order-1)>>3)] & (1<<((order-1)&7))) bit=3D1;=0A=
+      if (c&0x80) bit^=3D1;=0A=
+      c<<=3D1;=0A=
+      for (k=3D0; k<8; k++)		// rotate all (max.8) crc bytes=0A=
+      {=0A=
+        crc[k] =3D ((crc [k] << 1) | (crc [k+1] >> 7)) & mask [k];=0A=
+        if (bit) crc[k]^=3D polynom[k];=0A=
+      }=0A=
+    }=0A=
+  len++;=0A=
+  }=0A=
+=0A=
+=0A=
+  // perform revout=0A=
+=0A=
+  if (document.crcform.reflect[1].checked)=0A=
+    crc =3D reflect(crc, order, 0);=0A=
+=0A=
+=0A=
+  // perform xor value=0A=
+=0A=
+  for (i=3D0; i<8; i++) crc [i] ^=3D xor [i];=0A=
+=0A=
+=0A=
+  // write result=0A=
+=0A=
+  document.crcform.result.value =3D "";=0A=
+=0A=
+  flag=3D0;=0A=
+  for (i=3D0; i<8; i++)=0A=
+  {=0A=
+    actchar =3D crc[i]>>4;=0A=
+    if (flag || actchar)=0A=
+    {=0A=
+      document.crcform.result.value+=3D hexnum[actchar];=0A=
+      flag=3D1;=0A=
+    }=0A=
+=0A=
+    actchar =3D crc[i] & 15;=0A=
+    if (flag || actchar || i=3D=3D7)=0A=
+    {=0A=
+      document.crcform.result.value+=3D hexnum[actchar];=0A=
+      flag=3D1;=0A=
+    }=0A=
+  }=0A=
+=0A=
+  document.crcform.result.value+=3D " (hex), " + len +" data byte";=0A=
+  if (len!=3D1) document.crcform.result.value+=3D "s";=0A=
+  setfocus(document.crcform.data);=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+=0A=
+function revpoly ()=0A=
+{=0A=
+  // reverses poly=0A=
+=0A=
+  var polynom =3D new Array (8);=0A=
+  var order;=0A=
+  var actchar;=0A=
+  var flag;=0A=
+  var hexnum =3D new Array =
+("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F");=0A=
+=0A=
+=0A=
+  document.crcform.result.value =3D "";=0A=
+=0A=
+  // convert crc order=0A=
+=0A=
+  order=3DparseInt(document.crcform.order.value, 10);=0A=
+  if (isNaN(order) =3D=3D true || order<1 || order>64)=0A=
+  {=0A=
+    document.crcform.result.value =3D "CRC order must be between 1 and =
+64";=0A=
+    return;=0A=
+  }=0A=
+=0A=
+  // convert crc polynom=0A=
+=0A=
+  polynom =3D convertentry (document.crcform.polynom.value, order);=0A=
+  if (polynom[0]<0)=0A=
+  {=0A=
+    document.crcform.result.value =3D "Invalid CRC polynom";=0A=
+    return;=0A=
+  }=0A=
+=0A=
+  // check if polynom is valid (bit 0 must be set)=0A=
+  =0A=
+//  if (!(polynom[7]&1))=0A=
+//  {=0A=
+//    document.crcform.result.value =3D "CRC polynom LSB must be set";=0A=
+//    return;=0A=
+//  }=0A=
+=0A=
+  =0A=
+  // compute reversed polynom (reflected starting at second LSB that is =
+bit 1)=0A=
+=0A=
+  polynom =3D reflect(polynom, order, 1)=0A=
+=0A=
+  =0A=
+  // write result=0A=
+=0A=
+  document.crcform.result.value =3D "polynom reversed";=0A=
+  document.crcform.polynom.value =3D "";=0A=
+=0A=
+  flag=3D0;=0A=
+  for (i=3D0; i<8; i++)=0A=
+  {=0A=
+    actchar =3D polynom[i]>>4;=0A=
+    if (flag || actchar)=0A=
+    {=0A=
+      document.crcform.polynom.value+=3D hexnum[actchar];=0A=
+      flag=3D1;=0A=
+    }=0A=
+=0A=
+    actchar =3D polynom[i] & 15;=0A=
+    if (flag || actchar || i=3D=3D7)=0A=
+    {=0A=
+      document.crcform.polynom.value+=3D hexnum[actchar];=0A=
+      flag=3D1;=0A=
+    }=0A=
+  }=0A=
+}=0A=
+=0A=
+  =0A=
+function chgtype ()=0A=
+{=0A=
+  // change crc init type (algorithm dependend)=0A=
+=0A=
+  var init =3D new Array (8+1);=0A=
+  var order;=0A=
+  var actchar;=0A=
+  var flag;=0A=
+  var mask =3D new Array (8);=0A=
+  var polynom =3D new Array (8);=0A=
+  var hexnum =3D new Array =
+("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F");=0A=
+=0A=
+=0A=
+  document.crcform.result.value =3D "";=0A=
+=0A=
+  // convert crc order=0A=
+=0A=
+  order=3DparseInt(document.crcform.order.value, 10);=0A=
+  if (isNaN(order) =3D=3D true || order<1 || order>64)=0A=
+  {=0A=
+    document.crcform.result.value =3D "CRC order must be between 1 and =
+64";=0A=
+    return;=0A=
+  }=0A=
+=0A=
+=0A=
+  // convert crc polynom=0A=
+=0A=
+  polynom =3D convertentry (document.crcform.polynom.value, order);=0A=
+  if (polynom[0]<0)=0A=
+  {=0A=
+    document.crcform.result.value =3D "Invalid CRC polynom";=0A=
+    return;=0A=
+  }=0A=
+=0A=
+  // check if polynom is valid (bit 0 must be set)=0A=
+  =0A=
+//  if (!(polynom[7]&1))=0A=
+//  {=0A=
+//    document.crcform.result.value =3D "CRC polynom LSB must be set";=0A=
+//    return;=0A=
+//  }=0A=
+=0A=
+  =0A=
+=0A=
+  // convert crc init value=0A=
+=0A=
+  init =3D convertentry (document.crcform.init.value, order);=0A=
+  if (init[0]<0)=0A=
+  {=0A=
+    document.crcform.result.value =3D "Invalid initial value";=0A=
+    return;=0A=
+  }=0A=
+=0A=
+=0A=
+  // algorithm starts here (bit by bit type)=0A=
+  // generate and byte mask=0A=
+=0A=
+  counter =3D order;=0A=
+  for (i=3D7; i>=3D0; i--)=0A=
+  {=0A=
+    if (counter>=3D8) mask[i] =3D 255;=0A=
+    else mask[i]=3D(1<<counter)-1;=0A=
+    counter-=3D8;=0A=
+    if (counter<0) counter=3D0;=0A=
+  }=0A=
+=0A=
+  =0A=
+  // compute new init value=0A=
+=0A=
+  if (document.crcform.crcinittype[0].checked)		// nondirect -> direct=0A=
+  {=0A=
+    init[8] =3D 0;=0A=
+=0A=
+    for (i=3D0; i<order; i++) {=0A=
+=0A=
+      bit =3D init[7-((order-1)>>3)] & (1<<((order-1)&7));=0A=
+      for (k=3D0; k<8; k++) {=0A=
+        init[k] =3D ((init [k] << 1) | (init [k+1] >> 7)) & mask [k];=0A=
+        if (bit) init[k]^=3D polynom[k];=0A=
+      }=0A=
+    }	=0A=
+    document.crcform.crcinittype[0].checked=3Dfalse;=0A=
+    document.crcform.crcinittype[1].checked=3Dtrue;=0A=
+    document.crcform.result.value =3D "converted to direct initial =
+value";=0A=
+  }=0A=
+=0A=
+  else=0A=
+  {=0A=
+    for (i=3D0; i<order; i++) {				// direct -> nondirect=0A=
+=0A=
+      bit=3Dinit[7]&1;=0A=
+      for (k=3D0; k<8; k++) if (bit) init[k]^=3D polynom[k];=0A=
+      for (k=3D7; k; k--) init[k] =3D ((init [k] >> 1) | ((init[k-1]&1) =
+<< 7)) & mask [k];=0A=
+      init[0]>>=3D1;=0A=
+      if (bit) init[7-((order-1)>>3)] |=3D 1<<((order-1)&7);=0A=
+=0A=
+    }	=0A=
+    document.crcform.crcinittype[0].checked=3Dtrue;=0A=
+    document.crcform.crcinittype[1].checked=3Dfalse;=0A=
+    document.crcform.result.value =3D "converted to nondirect initial =
+value";=0A=
+  }=0A=
+=0A=
+=0A=
+  =0A=
+  // write result=0A=
+=0A=
+  document.crcform.init.value =3D "";=0A=
+=0A=
+  flag=3D0;=0A=
+  for (i=3D0; i<8; i++)=0A=
+  {=0A=
+    actchar =3D init[i]>>4;=0A=
+    if (flag || actchar)=0A=
+    {=0A=
+      document.crcform.init.value+=3D hexnum[actchar];=0A=
+      flag=3D1;=0A=
+    }=0A=
+=0A=
+    actchar =3D init[i] & 15;=0A=
+    if (flag || actchar || i=3D=3D7)=0A=
+    {=0A=
+      document.crcform.init.value+=3D hexnum[actchar];=0A=
+      flag=3D1;=0A=
+    }=0A=
+  }=0A=
+}=0A=
+=0A=
+=0A=
+function reflectByte(inbyte)=0A=
+{=0A=
+  // reflect one byte=0A=
+=0A=
+  var outbyte=3D0;=0A=
+  var i=3D0x01;=0A=
+  var j;=0A=
+=0A=
+  for (j=3D0x80; j; j>>=3D1) =0A=
+  {=0A=
+    if (inbyte & i) outbyte|=3Dj;=0A=
+    i<<=3D1;=0A=
+  }=0A=
+  return (outbyte);=0A=
+}=0A=
+=0A=
+=0A=
+function reflect(crc, bitnum, startLSB)=0A=
+{=0A=
+  // reflect 'bitnum' bits starting at lowest bit =3D startLSB=0A=
+=0A=
+  var i, j, k, iw, jw, bit;=0A=
+=0A=
+  for (k=3D0; k+startLSB<bitnum-1-k; k++) {=0A=
+=0A=
+    iw=3D7-((k+startLSB)>>3);=0A=
+    jw=3D1<<((k+startLSB)&7);=0A=
+    i=3D7-((bitnum-1-k)>>3);=0A=
+    j=3D1<<((bitnum-1-k)&7);=0A=
+=0A=
+    bit =3D crc[iw] & jw;=0A=
+    if (crc[i] & j) crc[iw] |=3D jw;=0A=
+    else crc[iw] &=3D (0xff-jw);=0A=
+    if (bit) crc[i] |=3D j;=0A=
+    else crc[i] &=3D (0xff-j);=0A=
+  }=0A=
+=0A=
+/* old bad code=0A=
+  iw =3D 7;                        // LSByte=0A=
+  jw =3D 1<<startLSB;              // LSBit, 0=3Dbit0 (crc), 1=3Dbit1 =
+(poly)=0A=
+=0A=
+  for (i=3D7-((bitnum-1)>>3); i<8; i++)=0A=
+  {=0A=
+    for (j=3D1<<((bitnum-1)&7); j && (!(i>iw || (i=3D=3Diw && j<jw))); =
+j>>=3D1)=0A=
+    {=0A=
+      bit =3D crc[iw] & jw;=0A=
+      if (crc[i] & j) crc[iw] |=3D jw;=0A=
+      else crc[iw] &=3D (0xff-jw);=0A=
+      if (bit) crc[i] |=3D j;=0A=
+      else crc[i] &=3D (0xff-j);=0A=
+=0A=
+      jw =3D (jw<<1) & 0xff;=0A=
+      if (!jw) {=0A=
+        iw--;=0A=
+        jw=3D1;=0A=
+      }=0A=
+    }=0A=
+  }=0A=
+*/=0A=
+  return(crc);=0A=
+}=0A=
+=0A=
+=0A=
+function convertentry (input, order)=0A=
+{=0A=
+  // convert from ascii to hexadecimal value (stored as byte sequence)=0A=
+=0A=
+  var len;=0A=
+  var actchar;=0A=
+  var polynom =3D new Array (0,0,0,0,0,0,0,0);=0A=
+  var brk =3D new Array (-1,0,0,0,0,0,0,0);=0A=
+=0A=
+  // convert crc value into byte sequence=0A=
+=0A=
+  len =3D input.length;=0A=
+  for (i=3D0; i < len; i++)=0A=
+  {=0A=
+    actchar =3D parseInt(input.charAt(i), 16);=0A=
+    if (isNaN(actchar) =3D=3D true) return (brk);=0A=
+    actchar&=3D15;=0A=
+=0A=
+    for (j=3D0; j<7; j++) polynom[j] =3D ((polynom [j] << 4) | (polynom =
+[j+1] >> 4)) & 255;=0A=
+    polynom[7] =3D ((polynom[7] <<4) | actchar) & 255;=0A=
+  }=0A=
+=0A=
+=0A=
+  // compute and check crc order=0A=
+ =0A=
+  count =3D 64;=0A=
+  for (i=3D0; i<8; i++)=0A=
+  {=0A=
+    for (j=3D0x80; j; j>>=3D1)=0A=
+    {=0A=
+      if (polynom[i] & j) break;=0A=
+      count--;=0A=
+    }=0A=
+    if (polynom[i] & j) break;=0A=
+  }=0A=
+=0A=
+  if (count > order) return (brk);=0A=
+=0A=
+  return(polynom);=0A=
+}=0A=
+=0A=
+//-->=0A=
+</SCRIPT>
+
+<META content=3D"MSHTML 6.00.6000.16608" name=3DGENERATOR></HEAD>
+<BODY bgColor=3D#a2a2a2>
+<FORM name=3Dcrcform><FONT face=3DArial color=3D#e9e9e9=20
+size=3D4>&nbsp;&nbsp;&nbsp;<B>CRC parameters</B> <BR><FONT face=3DArial=20
+size=3D1>&nbsp;<BR><!-- Tabelle -->
+<TABLE cellSpacing=3D1 cellPadding=3D6 align=3Dleft border=3D0>
+  <TBODY>
+  <TR>
+    <TD width=3D33></TD><!---------------------------------- Zeile CRC =
+order  ---------------------->
+    <TD width=3D200 bgColor=3D#214578><FONT face=3DArial color=3D#d9a467 =
+
+      size=3D4>&nbsp;&nbsp;CRC order <FONT color=3D#996487>&nbsp;(1..64) =
+
+      </FONT></FONT></TD>
+    <TD width=3D120 bgColor=3D#315588><FONT face=3D"courier new" =
+size=3D4>&nbsp;<INPUT=20
+      maxLength=3D2 size=3D2 name=3Dorder> </FONT></TD>
+    <TD></TD>
+    <TD></TD></TR><!---------------------------------- Zeile CRC polynom =
+ ---------------------->
+  <TR>
+    <TD></TD>
+    <TD bgColor=3D#214578><FONT face=3DArial color=3D#d9a467 =
+size=3D4>&nbsp;&nbsp;CRC=20
+      polynom <FONT color=3D#996487>&nbsp;(hex) </FONT></FONT></TD>
+    <TD bgColor=3D#315588><FONT face=3D"courier new" =
+size=3D4>&nbsp;<INPUT=20
+      maxLength=3D16 size=3D16 name=3Dpolynom> </FONT></TD>
+    <TD><FONT face=3DArial size=3D3><INPUT onclick=3Drevpoly() =
+type=3Dbutton value=3D" reverse! "> </FONT></TD>
+    <TD></TD></TR><!---------------------------------- Zeile CRC start =
+------------------------->
+  <TR>
+    <TD></TD>
+    <TD bgColor=3D#214578><FONT face=3DArial color=3D#d9a467=20
+      size=3D4>&nbsp;&nbsp;Initial value <FONT =
+color=3D#996487>&nbsp;(hex)=20
+      </FONT></FONT></TD>
+    <TD bgColor=3D#315588><FONT face=3D"courier new" =
+size=3D4>&nbsp;<INPUT=20
+      maxLength=3D16 size=3D16 name=3Dinit> </FONT></TD>
+    <TD><FONT face=3DArial size=3D3><INPUT onclick=3Dchgtype() =
+type=3Dbutton value=3D" convert! "> </FONT></TD>
+    <TD><FONT face=3DArial color=3D#e9e9e9 size=3D4><INPUT type=3Dradio=20
+      value=3Dcrcinitbitbybit name=3Dcrcinittype> nondirect &nbsp; =
+<INPUT type=3Dradio=20
+      value=3Dcrcinittable name=3Dcrcinittype> direct =
+</FONT></TD><!---------------------------------- Zeile CRC final XOR =
+---------------------->
+  <TR>
+    <TD></TD>
+    <TD bgColor=3D#214578><FONT face=3DArial color=3D#d9a467=20
+      size=3D4>&nbsp;&nbsp;Final XOR value <FONT =
+color=3D#996487>&nbsp;(hex)=20
+      </FONT></FONT></TD>
+    <TD bgColor=3D#315588><FONT face=3D"courier new" =
+size=3D4>&nbsp;<INPUT=20
+      maxLength=3D16 size=3D16 name=3Dxor> </FONT></TD>
+    <TD></TD></TR></TBODY></TABLE><BR =
+clear=3Dall><!---------------------------------- Zeile mit buttons =
+------------------------><!-- Tabelle -->
+<TABLE cellSpacing=3D1 cellPadding=3D8 align=3Dleft border=3D0>
+  <TBODY>
+  <TR>
+    <TD width=3D21></TD>
+    <TD><FONT face=3DArial color=3D#e9e9e9 size=3D4><INPUT =
+type=3Dcheckbox value=3Drevin=20
+      name=3Dreflect>&nbsp;reverse data bytes&nbsp;&nbsp;&nbsp;&nbsp; =
+<INPUT=20
+      type=3Dcheckbox value=3Dcrcrevout name=3Dreflect>&nbsp;reverse CRC =
+result before=20
+      Final XOR </FONT></TD></TR>
+  <TR>
+    <TD></TD>
+    <TD><FONT face=3DArial size=3D3><INPUT onclick=3Dclrpar() =
+type=3Dbutton value=3D" clear "> &nbsp; <INPUT =
+onclick=3Dsetparcrcccitt() type=3Dbutton value=3D" CRC-CCITT "> &nbsp; =
+<INPUT onclick=3Dsetparcrc16() type=3Dbutton value=3D" CRC-16 "> &nbsp; =
+<INPUT onclick=3Dsetparcrc32() type=3Dbutton value=3D" CRC-32 ">=20
+  </FONT></TD></TR></TBODY></TABLE><BR clear=3Dall><FONT face=3DArial =
+color=3D#e9e9e9=20
+size=3D1>&nbsp;<BR><!------------------------ Zeile CRC char sequence =
+-------------------------><!-- Tabelle --><FONT=20
+face=3DArial color=3D#e9e9e9 size=3D4>&nbsp;&nbsp;&nbsp;<B>Data =
+sequence</B> <BR>
+<TABLE cellSpacing=3D1 cellPadding=3D7 align=3Dleft border=3D0>
+  <TBODY>
+  <TR>
+    <TD width=3D21></TD>
+    <TD><FONT face=3D"courier new" size=3D4><INPUT maxLength=3D256 =
+size=3D42=20
+      name=3Ddata> <FONT face=3DArial color=3D#e9e9e9 size=3D3><INPUT =
+onclick=3Dclrdata() type=3Dbutton value=3D" clear ">=20
+    </FONT></FONT></TD></TR></TBODY></TABLE><BR clear=3Dall><FONT =
+face=3DArial=20
+size=3D1>&nbsp;<BR><!------------------------------- Zeile CRC result =
+-------------------------><!-- Tabelle --><FONT=20
+face=3DArial color=3D#e9e9e9 size=3D4>&nbsp;&nbsp;&nbsp;<B>Result</B> =
+<BR>
+<TABLE cellSpacing=3D1 cellPadding=3D7 align=3Dleft border=3D0>
+  <TBODY>
+  <TR>
+    <TD width=3D21></TD>
+    <TD><FONT face=3D"courier new" size=3D4><INPUT =
+onfocus=3Dcrcform.result.blur()=20
+      maxLength=3D256 size=3D42 name=3Dresult> <FONT face=3DArial =
+color=3D#e9e9e9 size=3D3><INPUT onclick=3Dcompute() type=3Dbutton =
+value=3D" compute! ">=20
+      </FONT></FONT></TD></TR></TBODY></TABLE><BR clear=3Dall><FONT =
+face=3DArial=20
+size=3D1>&nbsp;<BR><FONT face=3DArial color=3D#e9e9e9 =
+size=3D4><BR><U>Version=20
+updates:</U><BR>21th of Juli 2003: question#1: how is a crc polynom =
+correctly=20
+reflected if the LSB is not 1 (but the high-bit of the polynom is always =
+assumed=20
+as 1)??<BR>21th of Juli 2003: question#2: in c-code, be careful using =
+polynoms=20
+having a LSB of 0 (e. g. XMODEM 0x8408)... code doesn't work for such =
+cases!!!=20
+Any ideas how to convert direct to nondirect values with polynoms having =
+
+LSB=3D0?<BR>21th of Juli 2003: removed bug in reflect() in javascript =
+code,=20
+affecting final crc reflecting of crc orders with order%7 !=3D 0<BR>4th =
+of=20
+February 2003: outcommented the "LSB=3D1 test" in JAVASCRIPT and C =
+code<BR>18th of=20
+January 2003: included crc masking after converting non-direct to direct =
+initial=20
+crc (c-code only, javascript-code is and was correct)<BR>17th of January =
+2003:=20
+included comment concerning standard parameter set values (like =
+CRC-CCITT), see=20
+below; included new links to crc pages<BR>13th of January 2003: in =
+crctester.c:=20
+most of the int's replaced by unsigned longs to avoid compilation errors =
+
+(especially on 16 bit machines)<BR><BR>This CRC calculator shall support =
+
+hardware and software designers to check their specific CRC routine. =
+Most of the=20
+theory for the JAVASCRIPT and the C code below is taken from the =
+well-known=20
+PAINLESS GUIDE TO CRC ERROR DETECTION ALGORITHMS article written by Ross =
+N.=20
+Williams.<BR><BR>The calculator has the following features: <BR>
+<UL type=3Ddisc>
+  <LI>CRC polynoms with orders of 1...64 (counted without the leading =
+'1' bit).=20
+  <LI>reversed CRC polynoms can be easily determined.<BR>
+  <LI>initial and final XOR values can be set.=20
+  <LI>initial CRC values of algorithms with (click 'nondirect') or =
+without=20
+  (click 'direct') augmented zero bits can be converted from one into =
+another.=20
+  <LI>both normal and reflected CRC (refin, refout).=20
+  <LI>common CRC parameter sets are given by buttons below the parameter =
+
+  table.<BR>(please verify values, there are e. g. different init values =
+for=20
+  calculating the CRC-CCITT, depending on if the algorithm is direct or=20
+  indirect. To assign an initial value to the direct or nondirect =
+algorithm, you=20
+  can click the appropriate radio button on the right side.)<BR>
+  <LI>data sequence can be either NULL or a sequence of characters and=20
+  hexadecimal values between %00...%FF, so is '%31%32%33' the same as =
+'123'.=20
+  </LI></UL><BR>Furthermore, here is the complete free <A=20
+href=3D"http://www.zorc.breitbandkatze.de/crctester.c">C CODE</A> of a =
+simple CRC=20
+test programm that offer evaluation of different CRC algorithms =
+(bit-by-bit and=20
+table-driven, each with and without augmented zero bytes). For the =
+JAVASCRIPT=20
+code see the HTML source ;-) I checked the resulting CRC with those =
+values=20
+computed by some simple CRC calculators that I found in the internet =
+(see links)=20
+and the values given in the PAINLESS GUIDE TO CRC ERROR DETECTION =
+ALGORITHMS=20
+article. Anyway, if there are any errors in computing the CRC, either in =
+the=20
+above JAVASCRIPT calculator or in the C program, please contact me under =
+<A=20
+href=3D"mailto:zorci@gmx.de">zorci@gmx.de</A>. <BR><BR>Next is a list of =
+CRC=20
+polynoms that I could find: <FONT face=3D"courier new" color=3D#000000 =
+size=3D4><PRE>   CCITT-32:   0x04C11DB7  =3D  x<SUP>32</SUP> + =
+x<SUP>26</SUP> +  x<SUP>23</SUP> + x<SUP>22</SUP> + x<SUP>16</SUP> + =
+x<SUP>12</SUP> +
+                              x<SUP>11</SUP> + x<SUP>10</SUP> + =
+x<SUP>8</SUP> + x<SUP>7</SUP> + x<SUP>5</SUP> + x<SUP>4</SUP> + =
+x<SUP>2</SUP> + x + 1
+
+   CRC-16:     0x8005      =3D  x<SUP>16</SUP> + x<SUP>15</SUP> + =
+x<SUP>2</SUP> + 1
+
+   CRC-CCITT:  0x1021      =3D  x<SUP>16</SUP> + x<SUP>12</SUP> + =
+x<SUP>5</SUP> + 1
+
+   CRC-XMODEM: 0x8408      =3D  x<SUP>16</SUP> + x<SUP>15</SUP> + =
+x<SUP>10</SUP> + x<SUP>3</SUP>
+
+   12bit-CRC:  0x80f       =3D  x<SUP>12</SUP> + x<SUP>11</SUP> + =
+x<SUP>3</SUP> + x<SUP>2</SUP> + x + 1
+
+   10bit-CRC:  0x233       =3D  x<SUP>10</SUP> + x<SUP>9</SUP>  + =
+x<SUP>5</SUP>  + x<SUP>4</SUP>  + x  + 1
+
+   8bit-CRC:   0x07        =3D  x<SUP>8</SUP>  + x<SUP>2</SUP>  + x + 1
+
+</PRE><FONT face=3DArial color=3D#e9e9e9 size=3D4>Finally here are some =
+links to CRC=20
+and JAVASCRIPT relavant websites: <PRE>   <A =
+href=3D"http://www.cs.waikato.ac.nz/~312/crc.txt">www.cs.waikato.ac.nz/~3=
+12/crc.txt</A>(Painless guide)
+   <A =
+href=3D"http://www.seanet.com/~ksbrown/kmath458.htm">www.seanet.com/~ksbr=
+own/kmath458.htm</A>
+   <A =
+href=3D"http://www.geocities.com/CapeCanaveral/Launchpad/3632/crcguide.ht=
+m">www.geocities.com/CapeCanaveral/Launchpad/3632/crcguide.htm</A>
+   <A =
+href=3D"http://utopia.knoware.nl/users/eprebel/Communication/CRC/index.ht=
+ml">utopia.knoware.nl/users/eprebel/Communication/CRC/index.html</A>
+   <A =
+href=3D"http://www.iti.fh-flensburg.de/lang/algorithmen/code/crc/crc.htm"=
+>www.iti.fh-flensburg.de/lang/algorithmen/code/crc/crc.htm</A>
+   <A =
+href=3D"http://www.eagleairaust.com.au/code/crc16.htm">http://www.eagleai=
+raust.com.au/code/crc16.htm</A>
+   <A =
+href=3D"http://www.s-direktnet.de/homepages/neumann/Data/Michael/Algorith=
+men/Crc/Crc16.cpp">www.s-direktnet.de/homepages/neumann/Data/Michael/Algo=
+rithmen/Crc/Crc16.cpp</A>
+   <A =
+href=3D"http://members.dencity.com/jas/fravia/crctut1.htm">members.dencit=
+y.com/jas/fravia/crctut1.htm</A>
+   <A =
+href=3D"http://ftp.std.com/obi/Standards/FileTransfer/XMODEM-CRC.NOTE.1">=
+http://ftp.std.com/obi/Standards/FileTransfer/XMODEM-CRC.NOTE.1</A>
+   <A =
+href=3D"http://www.ross.net/crc/links.html">www.ross.net/crc/links.html</=
+A>
+   <A =
+href=3D"http://www.smbus.org/faq/crc8Applet.htm">www.smbus.org/faq/crc8Ap=
+plet.htm</A>  (JAVA CRC-8 calculator)
+   <A =
+href=3D"http://hyperarchive.lcs.mit.edu/HyperArchive/Archive/per/csmp/csm=
+p-digest-v3-028.txt">hyperarchive.lcs.mit.edu/HyperArchive/Archive/per/cs=
+mp/csmp-digest-v3-028.txt</A>
+   <A =
+href=3D"http://www.joegeluso.com/software/articles/ccitt.htm#results">CRC=
+-CCITT discussion</A>
+   <A href=3D"http://home.att.net/~cbwatson/CRC_info.doc">more test case =
+values</A>
+
+   <A =
+href=3D"http://www.teamone.de/selfhtml/">http://www.teamone.de/selfhtml/<=
+/A>  (JAVASCRIPT)
+   <A =
+href=3D"http://www.netzwelt.com/selfhtml/">http://www.netzwelt.com/selfht=
+ml/</A>  (JAVASCRIPT)
+   <A href=3D"http://www.rabich.de/">http://www.rabich.de/</A>  =
+(JAVASCRIPT)
+
+</PRE><FONT face=3DArial color=3D#e9e9e9 size=3D4>So have a nice time =
+even in a=20
+reflected world :-)<BR>Sven Reifegerste<BR></FORM>
+<SCRIPT language=3DJavaScript>=0A=
+  resetform();=0A=
+</SCRIPT>
+</FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></FONT></F=
+ONT></BODY></HTML>

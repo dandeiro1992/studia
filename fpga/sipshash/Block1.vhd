@@ -1,0 +1,181 @@
+-- Copyright (C) 2016  Intel Corporation. All rights reserved.
+-- Your use of Intel Corporation's design tools, logic functions 
+-- and other software and tools, and its AMPP partner logic 
+-- functions, and any output files from any of the foregoing 
+-- (including device programming or simulation files), and any 
+-- associated documentation or information are expressly subject 
+-- to the terms and conditions of the Intel Program License 
+-- Subscription Agreement, the Intel Quartus Prime License Agreement,
+-- the Intel MegaCore Function License Agreement, or other 
+-- applicable license agreement, including, without limitation, 
+-- that your use is for the sole purpose of programming logic 
+-- devices manufactured by Intel and sold by Intel or its 
+-- authorized distributors.  Please refer to the applicable 
+-- agreement for further details.
+
+-- PROGRAM		"Quartus Prime"
+-- VERSION		"Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition"
+-- CREATED		"Thu Jun 07 18:59:36 2018"
+
+LIBRARY ieee;
+USE ieee.std_logic_1164.all; 
+
+LIBRARY work;
+
+ENTITY Block1 IS 
+	PORT
+	(
+		CLK :  IN  STD_LOGIC;
+		RD :  IN  STD_LOGIC;
+		WR :  IN  STD_LOGIC;
+		INIT :  IN  STD_LOGIC;
+		ADDR :  IN  STD_LOGIC_VECTOR(31 DOWNTO 0);
+		DIN :  IN  STD_LOGIC_VECTOR(31 DOWNTO 0);
+		DOUT :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0)
+	);
+END Block1;
+
+ARCHITECTURE bdf_type OF Block1 IS 
+
+COMPONENT sipround
+	PORT(v0_in : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v1_in : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v2_in : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v3_in : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v0_out : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v1_out : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v2_out : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v3_out : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
+	);
+END COMPONENT;
+
+COMPONENT ster1
+GENERIC (c : INTEGER
+			);
+	PORT(CLK : IN STD_LOGIC;
+		 INIT : IN STD_LOGIC;
+		 WR : IN STD_LOGIC;
+		 ADDR : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+		 DIN : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+		 b : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+		 m : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v0 : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v1 : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v2 : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v3 : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
+	);
+END COMPONENT;
+
+COMPONENT rejestr
+GENERIC (c : INTEGER
+			);
+	PORT(CLK : IN STD_LOGIC;
+		 b : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+		 m : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v0_in : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v0_init : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v1_in : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v1_init : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v2_in : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v2_init : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v3_in : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v3_init : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 hash : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v0 : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v1 : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v2 : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 v3 : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
+	);
+END COMPONENT;
+
+COMPONENT ster2
+GENERIC (c : INTEGER
+			);
+	PORT(CLK : IN STD_LOGIC;
+		 RD : IN STD_LOGIC;
+		 ADDR : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+		 hash : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+		 DOUT : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+	);
+END COMPONENT;
+
+SIGNAL	SYNTHESIZED_WIRE_0 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_1 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_2 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_3 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_4 :  STD_LOGIC_VECTOR(7 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_5 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_6 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_7 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_8 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_9 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_10 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_11 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_12 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_13 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+SIGNAL	SYNTHESIZED_WIRE_14 :  STD_LOGIC_VECTOR(63 DOWNTO 0);
+
+
+BEGIN 
+
+
+
+b2v_inst : sipround
+PORT MAP(v0_in => SYNTHESIZED_WIRE_0,
+		 v1_in => SYNTHESIZED_WIRE_1,
+		 v2_in => SYNTHESIZED_WIRE_2,
+		 v3_in => SYNTHESIZED_WIRE_3,
+		 v0_out => SYNTHESIZED_WIRE_6,
+		 v1_out => SYNTHESIZED_WIRE_8,
+		 v2_out => SYNTHESIZED_WIRE_10,
+		 v3_out => SYNTHESIZED_WIRE_12);
+
+
+b2v_inst3 : ster1
+GENERIC MAP(c => 2
+			)
+PORT MAP(CLK => CLK,
+		 INIT => INIT,
+		 WR => WR,
+		 ADDR => ADDR,
+		 DIN => DIN,
+		 b => SYNTHESIZED_WIRE_4,
+		 m => SYNTHESIZED_WIRE_5,
+		 v0 => SYNTHESIZED_WIRE_7,
+		 v1 => SYNTHESIZED_WIRE_9,
+		 v2 => SYNTHESIZED_WIRE_11,
+		 v3 => SYNTHESIZED_WIRE_13);
+
+
+b2v_inst4 : rejestr
+GENERIC MAP(c => 2
+			)
+PORT MAP(CLK => CLK,
+		 b => SYNTHESIZED_WIRE_4,
+		 m => SYNTHESIZED_WIRE_5,
+		 v0_in => SYNTHESIZED_WIRE_6,
+		 v0_init => SYNTHESIZED_WIRE_7,
+		 v1_in => SYNTHESIZED_WIRE_8,
+		 v1_init => SYNTHESIZED_WIRE_9,
+		 v2_in => SYNTHESIZED_WIRE_10,
+		 v2_init => SYNTHESIZED_WIRE_11,
+		 v3_in => SYNTHESIZED_WIRE_12,
+		 v3_init => SYNTHESIZED_WIRE_13,
+		 hash => SYNTHESIZED_WIRE_14,
+		 v0 => SYNTHESIZED_WIRE_0,
+		 v1 => SYNTHESIZED_WIRE_1,
+		 v2 => SYNTHESIZED_WIRE_2,
+		 v3 => SYNTHESIZED_WIRE_3);
+
+
+b2v_inst5 : ster2
+GENERIC MAP(c => 2
+			)
+PORT MAP(CLK => CLK,
+		 RD => RD,
+		 ADDR => ADDR,
+		 hash => SYNTHESIZED_WIRE_14,
+		 DOUT => DOUT);
+
+
+END bdf_type;

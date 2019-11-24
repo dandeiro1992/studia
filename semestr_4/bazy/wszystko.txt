@@ -1,0 +1,209 @@
+CREATE TABLE tCennik
+(
+id int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id),
+szkodliwe float NOT NULL, 
+cena_km float NOT NULL,
+granica float NOT NULL, 
+wspolczynnik float NOT NULL,
+);
+
+CREATE TABLE tJednostka	
+(
+id_jednostka int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id_jednostka),
+nazwa nvarchar(50) NOT NULL,
+);
+
+
+CREATE TABLE tPodatek
+(
+id_podatek int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id_podatek),
+nazwa nvarchar(50) NOT NULL,
+stawka int NOT NULL,
+);
+
+
+CREATE TABLE tZamawiajacy
+(
+id_zamawiajacy int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id_zamawiajacy),
+nazwa_firmy nvarchar(50),
+nip nvarchar(15),
+regon char(15),
+imie nvarchar(50),
+nazwisko nvarchar(50),
+pesel char(11),
+kod_pocztowy char(5) NOT NULL,
+poczta nvarchar(50) NOT NULL,
+ulica nvarchar(50) NOT NULL,
+nr_lokalu nvarchar(10) NOT NULL,
+czy_firma bit NOT NULL,
+);
+
+
+CREATE TABLE tUslugi
+(
+id_usluga int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id_usluga),
+nazwa nvarchar(80) NOT NULL,
+przewoz_osob bit NOT NULL,
+osoby_niepelnosprawne bit NOT NULL,
+przewoz_towaru bit NOT NULL,
+niebezpieczne bit NOT NULL,
+);
+
+
+CREATE TABLE tRodzaj_Towaru
+(
+id_rodzaj_towaru int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id_rodzaj_towaru),
+id_podatek int NOT NULL,
+foreign key(id_podatek) references tPodatek(id_podatek),
+nazwa nvarchar(50) NOT NULL,
+czy_niebezpieczny bit NOT NULL,
+);
+
+
+
+
+CREATE TABLE tTowar
+(
+id_towar int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id_towar),
+id_rodzaj_towaru int NOT NULL,
+foreign key(id_rodzaj_towaru ) references tRodzaj_Towaru(id_rodzaj_towaru),
+id_jednostka int NOT NULL,
+foreign key(id_jednostka) references tJednostka(id_jednostka),
+nazwa nvarchar(50) NOT NULL,
+ilosc int NOT NULL,
+zajmowana_objetosc_przez_jednostke float NOT NULL,
+masa_jednostki_miary float NOT NULL,
+);
+
+CREATE TABLE tRodzaj_Samochodu
+(
+id_rodzaj_samochodu int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id_rodzaj_samochodu),
+nazwa nvarchar(50) NOT NULL,
+dlugosc float NOT NULL,
+wysokosc float NOT NULL,
+szerokosc float NOT NULL,
+objetosc float NOT NULL,
+ladownosc_w_tonach float NOT NULL,
+liczba_miejsc int NOT NULL,
+);
+
+
+
+CREATE TABLE tSamochod
+(
+vin char(17) NOT NULL,
+PRIMARY KEY(vin),
+id_usluga int NOT NULL,
+foreign key(id_usluga) references tUslugi(id_usluga),
+id_rodzaj_samochodu int NOT NULL,
+foreign key(id_rodzaj_samochodu) references tRodzaj_Samochodu(id_rodzaj_samochodu),
+nr_rej char(8) NOT NULL,
+marka nvarchar(50) NOT NULL,
+model nvarchar(50) NOT NULL,
+poj_silnika float NOT NULL,
+rok_produkcji int NOT NULL,
+moc_silnika int NOT NULL,
+
+);
+
+CREATE TABLE tFirma
+(
+id_firma int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id_firma),
+id int NOT NULL,
+foreign key(id) references tCennik(id),
+nazwa nvarchar(50) NOT NULL,
+nip nvarchar(15),
+regon char(15),
+kod_pocztowy nvarchar(5) NOT NULL,
+poczta nvarchar(50) NOT NULL,
+ulica nvarchar(50) NOT NULL,
+nr_lokalu char(10) NOT NULL,
+);
+
+
+CREATE TABLE tSpedytor
+(
+id_spedytor int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id_spedytor),
+imie nvarchar(50) NOT NULL,
+nazwisko nvarchar(50) NOT NULL,
+pesel nvarchar(11) NOT NULL,
+miejsce_urodzenia nvarchar(50) NOT NULL,
+kod_pocztowy char(5) NOT NULL,
+poczta nvarchar(50) NOT NULL,
+ulica nvarchar(50) NOT NULL,
+nr_lokalu nvarchar(10) NOT NULL,
+);
+
+
+CREATE TABLE tKierowca
+(
+id_kierowca int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id_kierowca),
+vin char(17) NOT NULL,
+foreign key(vin) references tSamochod(vin),
+id_firma int NOT NULL,
+foreign key(id_firma) references tFirma(id_firma),
+imie nvarchar(50) NOT NULL,
+nazwisko nvarchar(50) NOT NULL,
+pesel nvarchar(11) NOT NULL,
+miejsce_urodzenia nvarchar(50) NOT NULL,
+data_otrzymania_uprawnien date NOT NULL,
+data_badan_lekarskich date NOT NULL,
+kod_pocztowy nvarchar(5) NOT NULL,
+poczta nvarchar(50) NOT NULL,
+ulica nvarchar(50) NOT NULL,
+nr_lokalu nvarchar(10) NOT NULL,
+czy_adr bit NOT NULL,
+czy_dostepny bit NOT NULL,
+);
+
+
+CREATE TABLE tTransport
+(
+id_transport int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id_transport),
+id_towar int NOT NULL,
+foreign key(id_towar) references tTowar(id_towar),
+id_kierowca int NOT NULL,
+foreign key(id_kierowca) references tKierowca(id_kierowca),
+id_spedytor int NOT NULL,
+foreign key(id_spedytor) references tSpedytor(id_spedytor),
+id_zamawiajacy int NOT NULL,
+foreign key(id_zamawiajacy) references tZamawiajacy(id_zamawiajacy),
+koszt float NOT NULL,
+skad nvarchar(50) NOT NULL,
+dokad nvarchar(50) NOT NULL,
+kilometry float NOT NULL,
+kiedy date NOT NULL,
+);
+
+
+CREATE TABLE tHistoria_Transportu
+(
+id int IDENTITY(1,1) NOT NULL,
+PRIMARY KEY(id),
+id_towar int NOT NULL,
+foreign key(id_towar) references tTowar(id_towar),
+id_kierowca int NOT NULL,
+foreign key(id_kierowca) references tKierowca(id_kierowca),
+id_spedytor int NOT NULL,
+foreign key(id_spedytor) references tSpedytor(id_spedytor),
+id_zamawiajacy int NOT NULL,
+foreign key(id_zamawiajacy) references tZamawiajacy(id_zamawiajacy),
+koszt float NOT NULL,
+skad nvarchar(50) NOT NULL,
+dokad nvarchar(50) NOT NULL,
+kilometry float NOT NULL,
+kiedy date NOT NULL,
+);
+

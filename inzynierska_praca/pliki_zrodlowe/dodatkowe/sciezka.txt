@@ -1,0 +1,14 @@
+C:\Windows\system32>"c:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\certmgr.ex
+e" -add -all -c "c:\Users\Damian\Desktop\Certyfikat\localhost.crt" -s root
+
+
+Dzia³aj¹ce bez potwierdzenia:
+
+C:\Windows\system32>"c:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\certmgr.ex
+e" -add -all -c "c:\Users\Damian\Desktop\Certyfikat\localhost.crt" -s -r localMa
+chine root
+
+"c:\Program Files\Microsoft SDKs\Windows\v7.1A\Bin\certmgr.exe" -add -all -c "c:\Users\Damian\Desktop\testhttpspl.crt" -s -r localMachine root
+
+
+"c:\Program Files\Microsoft SDKs\Windows\v7.1A\Bin\certmgr.exe" -add -all -c "c:\Users\Damian\Desktop\wwwtesthttpdev.crt" -s -r localMachine root

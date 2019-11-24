@@ -1,0 +1,9 @@
+E:\projektyc#\Projekt_Damian_Krata\Projekt_Damian_Krata\bin\Release\Projekt_Damian_Krata.exe.config
+E:\projektyc#\Projekt_Damian_Krata\Projekt_Damian_Krata\bin\Release\Projekt_Damian_Krata.exe
+E:\projektyc#\Projekt_Damian_Krata\Projekt_Damian_Krata\bin\Release\Projekt_Damian_Krata.pdb
+E:\projektyc#\Projekt_Damian_Krata\Projekt_Damian_Krata\obj\Release\Projekt_Damian_Krata.Form1.resources
+E:\projektyc#\Projekt_Damian_Krata\Projekt_Damian_Krata\obj\Release\Projekt_Damian_Krata.Properties.Resources.resources
+E:\projektyc#\Projekt_Damian_Krata\Projekt_Damian_Krata\obj\Release\Projekt_Damian_Krata.csproj.GenerateResource.Cache
+E:\projektyc#\Projekt_Damian_Krata\Projekt_Damian_Krata\obj\Release\Projekt_Damian_Krata.exe
+E:\projektyc#\Projekt_Damian_Krata\Projekt_Damian_Krata\obj\Release\Projekt_Damian_Krata.pdb
+E:\projektyc#\Projekt_Damian_Krata\Projekt_Damian_Krata\obj\Release\Projekt_Damian_Krata.csprojResolveAssemblyReference.cache

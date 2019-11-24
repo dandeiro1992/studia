@@ -1,0 +1,7 @@
+glColor3f( 1.0f, 1.0f, 1.0f );  // bia³y
+glColor3f( 0.0f, 0.0f, 0.0f );  // czarny
+glColor3f( 1.0f, 0.0f, 0.0f );  // czerwony
+glColor3f( 0.0f, 1.0f, 0.0f );  // zielony
+glColor3f( 0.0f, 0.0f, 1.0f );  // niebieski
+glColor3f( 1.0f, 1.0f, 0.0f );  // ¿ó³ty
+glColor3f( 1.0f, 0.0f, 1.0f );  // fiolet

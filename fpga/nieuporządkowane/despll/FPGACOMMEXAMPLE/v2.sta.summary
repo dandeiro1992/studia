@@ -1,0 +1,53 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'pllunit|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 80.023
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'pllunit|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.343
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLK'
+Slack : 49.928
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'pllunit|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 99.679
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Setup 'pllunit|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 84.354
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'pllunit|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.313
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLK'
+Slack : 49.939
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'pllunit|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 99.683
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'pllunit|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 151.660
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'pllunit|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.118
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLK'
+Slack : 49.652
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'pllunit|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 99.722
+TNS   : 0.000
+
+------------------------------------------------------------

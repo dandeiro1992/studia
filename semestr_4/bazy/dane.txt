@@ -1,0 +1,251 @@
+INSERT INTO tCennik VALUES 
+('550', '2.5', '200', '1.5');
+INSERT INTO tCennik VALUES 
+('1000', '1.8', '300', '1.2');
+INSERT INTO tCennik VALUES 
+('150', '2.5', '500', '1.9');
+INSERT INTO tCennik VALUES 
+('625', '1.5', '1000', '2');
+INSERT INTO tCennik VALUES 
+('0', '3', '0', '1.6');
+
+INSERT INTO tJednostka VALUES 
+('sztuka');
+INSERT INTO tJednostka VALUES 
+('m^3');
+INSERT INTO tJednostka VALUES 
+('m^2');
+INSERT INTO tJednostka VALUES 
+('kilo');
+INSERT INTO tJednostka VALUES 
+('tona');
+INSERT INTO tJednostka VALUES 
+('paleta');
+
+
+INSERT INTO tZamawiajacy (nazwa_firmy, nip, regon,kod_pocztowy,poczta, ulica, nr_lokalu, czy_firma) VALUES 
+('VOLT', '9492107026', '241123546', '35111','Rzeszow', 'Mila', '8', 1);
+INSERT INTO tZamawiajacy (nazwa_firmy, nip, regon,kod_pocztowy,poczta, ulica, nr_lokalu, czy_firma) VALUES 
+('X-KOM', '8260002106', '517343200', '98170','Widawa', 'Lesna', '13', 1);
+INSERT INTO tZamawiajacy (nazwa_firmy, nip, regon,kod_pocztowy,poczta, ulica, nr_lokalu, czy_firma) VALUES 
+('ADIDAS', '7941090677', '651432623', '14760','Warszawa', 'Kaliskiego', '27', 1);
+INSERT INTO tZamawiajacy (nazwa_firmy, nip, regon,kod_pocztowy,poczta, ulica, nr_lokalu, czy_firma) VALUES 
+('PBT Group', '5862071911', '220700514', '81339','Gdynia', 'Powstancow', '111', 1);
+INSERT INTO tZamawiajacy (nazwa_firmy, nip, regon,kod_pocztowy,poczta, ulica, nr_lokalu, czy_firma) VALUES 
+('BDSKLEP', '5252413081', '141162822', '55666','Krakow', 'Ciemna', '18', 1);
+INSERT INTO tZamawiajacy (imie, nazwisko, pesel,kod_pocztowy,poczta, ulica, nr_lokalu, czy_firma) VALUES 
+('Damian', 'Krata', '92090313551', '98170','Widawa', 'Mickiewicza', '25', 0);
+INSERT INTO tZamawiajacy (imie, nazwisko, pesel,kod_pocztowy,poczta, ulica, nr_lokalu, czy_firma) VALUES 
+('Alina', 'Brzoza', '85012016555', '99457','Chelm', 'Konrada', '5', 0);
+INSERT INTO tZamawiajacy (imie, nazwisko, pesel,kod_pocztowy,poczta, ulica, nr_lokalu, czy_firma) VALUES 
+('Antoni', 'Kibic', '61042318523', '53248','Lodz', 'Naruszewicza', '10', 0);
+INSERT INTO tZamawiajacy (imie, nazwisko, pesel,kod_pocztowy,poczta, ulica, nr_lokalu, czy_firma) VALUES 
+('Artur', 'Bercik', '75102218555', '74532','Sieradz', 'Wolna', '23', 0);
+
+
+
+INSERT INTO tPodatek VALUES 
+('VAT 1','0');
+INSERT INTO tPodatek VALUES 
+('VAT 2','8');
+INSERT INTO tPodatek VALUES 
+('VAT 3','23');
+INSERT INTO tPodatek VALUES 
+('podatek od dobr luksusowych','25');
+INSERT INTO tPodatek VALUES 
+('akcyza alkohol','15');
+INSERT INTO tPodatek VALUES 
+('akcyza papierosy','20');
+INSERT INTO tPodatek VALUES 
+('paliwa','10');
+
+
+INSERT INTO tRodzaj_Towaru VALUES 
+('2','owoce',0);
+INSERT INTO tRodzaj_Towaru VALUES 
+('2','warzywa',0);
+INSERT INTO tRodzaj_Towaru VALUES 
+('3','AGD',0);
+INSERT INTO tRodzaj_Towaru VALUES 
+('3','RTV',0);
+INSERT INTO tRodzaj_Towaru VALUES 
+('7','paliwo',1);
+INSERT INTO tRodzaj_Towaru VALUES 
+('7','surowce',1);
+INSERT INTO tRodzaj_Towaru VALUES 
+('3','szklo',1);
+INSERT INTO tRodzaj_Towaru VALUES 
+('2','zywnosc',0);
+INSERT INTO tRodzaj_Towaru VALUES 
+('4','materialy wybuchowe',1);
+INSERT INTO tRodzaj_Towaru VALUES 
+('3','artykuly budowlane',0);
+INSERT INTO tRodzaj_Towaru VALUES 
+('3','meble',0);
+INSERT INTO tRodzaj_Towaru VALUES 
+('4','elektronika',0);
+INSERT INTO tRodzaj_Towaru VALUES 
+('5','alkohol',0);
+INSERT INTO tRodzaj_Towaru VALUES 
+('6','papierosy, tyton',0);
+
+INSERT INTO tTowar VALUES 
+('1','5','banany','5','1.3','10');
+INSERT INTO tTowar VALUES 
+('5','2','benzyna','24','1','90');
+INSERT INTO tTowar VALUES 
+('10','6','fajerwerki','18','1.4','120');
+INSERT INTO tTowar VALUES 
+('11','1','sofy','10','2','100');
+INSERT INTO tTowar VALUES 
+('4','1','telewizory','100','0.2','30');
+
+INSERT INTO tUslugi VALUES 
+('przewoz autokarowy',1,1,0,0);
+INSERT INTO tUslugi VALUES 
+('transport towaru',0,0,1,1);
+INSERT INTO tUslugi VALUES 
+('towary niebezpieczne',0,0,1,1);
+INSERT INTO tUslugi VALUES 
+('osoby niepelnosprawne',1,1,0,0);
+INSERT INTO tUslugi VALUES 
+('wycieczka',1,0,0,0);
+
+
+
+INSERT INTO tRodzaj_Samochodu VALUES 
+('bus', '3.6', '1.8', '1.7','11','1.5','6');
+INSERT INTO tRodzaj_Samochodu VALUES 
+('dostawczy', '3.6', '1.7', '1.7','10','0.9','0');
+INSERT INTO tRodzaj_Samochodu VALUES 
+('3-tonowy', '5.2', '2.3', '2.3','27','3.0','0');
+INSERT INTO tRodzaj_Samochodu VALUES 
+('ubraniowka', '6.0', '2.4', '2.6','37','2.5','0');
+INSERT INTO tRodzaj_Samochodu VALUES 
+('maly-zestaw', '5.2', '2.3', '2.3','27','5.0','0');
+INSERT INTO tRodzaj_Samochodu VALUES 
+('8-tonowy', '7.8', '2.4', '2.4','44','8.0','0');
+INSERT INTO tRodzaj_Samochodu VALUES 
+('zestaw', '7.65', '2.4', '2.8','51','16.0','0');
+INSERT INTO tRodzaj_Samochodu VALUES 
+('naczepa', '13.6', '2.4', '2.7','88','24.0','0');
+INSERT INTO tRodzaj_Samochodu VALUES 
+('jumbo', '13.6', '2.4', '3','97','20.0','0');
+INSERT INTO tRodzaj_Samochodu VALUES 
+('autobus', '10', '2.2', '2.2','48','10','46');
+
+
+INSERT INTO tSamochod VALUES 
+('WVWZZZ31ZNW000001', '1', '10', 'ELA77NU','SETRA','S215HR','12902','2014','320');
+INSERT INTO tSamochod VALUES 
+('W0L0XCF0814000002', '2', '9', 'ELA11UL','VOLVO','FH','12000','2014','750');
+INSERT INTO tSamochod VALUES 
+('VF1JM0GD632503597', '3', '10', 'ELAV355','MERCEDES','ACTROS','15000','2014','820');
+INSERT INTO tSamochod VALUES 
+('VF7UARHJHAJ564519', '4', '1', 'TBU15KL','MERCEDES','JUMPER','3500','2014','150');
+INSERT INTO tSamochod VALUES 
+('VF7N1KFWB73130108', '2', '6', 'WE5655','SCANIA','T','13658','2014','400');
+INSERT INTO tSamochod VALUES 
+('VF36E3FZH21287010', '2', '7', 'TIK5862','RENAULT','K380','14000','2014','459');
+INSERT INTO tSamochod VALUES 
+('XMCXNZ34AZF024078', '2', '9', 'CZA98G6','MAN','R124','15245','2014','625');
+INSERT INTO tSamochod VALUES 
+('JMP0NH76W3X008141', '3', '9', 'ELA6W83','VOLVO','FMX','13658','2014','852');
+INSERT INTO tSamochod VALUES 
+('W0LGM6EM4B1207861', '2', '10', 'ESI5988','RENAULT','C250','14000','2014','900');
+INSERT INTO tSamochod VALUES 
+('VNKKH98360A150068', '2', '3', 'EZD21AL','DAF','XF106','15245','2014','1002');
+INSERT INTO tSamochod VALUES 
+('KLY4A11BDXC291944', '3', '2', 'KRA77T2','SCANIA','P','10960','2014','650');
+INSERT INTO tSamochod VALUES 
+('4V4NC9TH6EN159669', '1', '10', 'WRA369V','SETRA','S316HDS','7000','2014','350');
+
+
+
+INSERT INTO tFirma VALUES 
+('1', 'EUROTRANS', '7680002466', '59668226090903','61564','Abramow','3 Maja','9');
+INSERT INTO tFirma VALUES 
+('2', 'EUROCARGO', '7357918248', '75978129071374','21143','Warszawa','Kolejowa','8');
+INSERT INTO tFirma VALUES 
+('4', 'TRANSPORT', '9897766027', '71692742984343','95070','Pcim','Sienkiewicza','6');
+INSERT INTO tFirma VALUES 
+('1', 'MYCARGO', '7286839032', '69318804726964','90156','Widawa','Lipowa','4');
+INSERT INTO tFirma VALUES 
+('3', 'POLBUS', '9782516299', '83311859671692','75888','Koszalin','Nowy Rynek','1');
+INSERT INTO tFirma VALUES 
+('4', 'SINDBAD', '4551865123', '81912477441525','25647','Gdynia','Nadrzeczna','3');
+
+INSERT INTO tFirma (id, nazwa, nip, kod_pocztowy, poczta,ulica, nr_lokalu) VALUES 
+('5', 'Andrzej Krata', '9623832906','85546','Bydgoszcz','Ogrodowa','58');
+INSERT INTO tFirma (id, nazwa, nip, kod_pocztowy, poczta,ulica, nr_lokalu) VALUES
+('1', 'Mariusz Zarzycki', '8191426457','35967','Rzeszow','Modrzewiowa','9');
+
+
+
+INSERT INTO tSpedytor VALUES 
+('Adam', 'Kabza', '73010614653', 'Laskowice','98170','Widawa','Konopnickiej','28');
+
+INSERT INTO tSpedytor VALUES 
+('Milena', 'Korbus', '66043010842', 'Broszki','65358','Marzenin','Kownackiej','35');
+
+INSERT INTO tSpedytor VALUES 
+('Patryk', 'Lewandowski', '84013001696', 'Brzeski','88756','Wilgno','Orzeszkowej','29');
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO tKierowca VALUES 
+('WVWZZZ31ZNW000001',		'5',		'Hanna',	'Caban'	,	'84051217589',	'Kalisz',		'2005-01-02',	'2016-01-01',	'40687',	'Katowice',	'Sosnowa',	'5',		0,	1);
+INSERT INTO tKierowca VALUES
+('W0L0XCF0814000002',		'1',		'Aleksander',	'Lewicki',	'67112210934',	'Bydgoszcz',		'1987-02-03',	'2016-02-02',	'85001'	,	'Bydgoszcz',	'Cisowa',	'6',		1,	1);
+INSERT INTO tKierowca VALUES
+('VF1JM0GD632503597',		'2',		'Damian',	'Dudkiewicz',	'74020703357',	'Szczecin',		'1994-03-04',	'2016-03-03',	'70018'	,	'Szczecin',	'Klonowa',	'9',		1,	1);
+INSERT INTO tKierowca VALUES
+('VF7UARHJHAJ564519',		'7',		'Andrzej',	'Krata'	,	'76081714015',	'Kwiatkowice',		'1996-12-12',	'2016-05-06',	'85546'	,	'Bydgoszcz',	'Ogrodowa',	'58',		0,	1);
+INSERT INTO tKierowca VALUES
+('VF7N1KFWB73130108',		'3',		'Mariusz',	'Dudek',	'91080108674',	'Malbork',		'2001-04-05',	'2016-04-04',	'82200'	,	'Malbork',	'Lipowa',	'45',		1,	1);
+INSERT INTO tKierowca VALUES
+('VF36E3FZH21287010',		'4',		'Dawid'	,	'Duda'	,	'74041915197',	'Lublin',		'1994-05-06',	'2016-05-05',	'20001'	,	'Lublin',	'Miodowa',	'52',		1,	1);
+INSERT INTO tKierowca VALUES
+('XMCXNZ34AZF024078',		'1',		'Piotr'	,	'Komorowski',	'60021300716',	'Krosno',		'1980-06-07',	'2016-06-06',	'38400'	,	'Krosno',	'Puszkina',	'38',		1,	1);
+INSERT INTO tKierowca VALUES
+('JMP0NH76W3X008141',		'6',		'Grzegorz',	'Kaczmarek',	'81122007337',	'Zakopane',		'2001-07-08',	'2016-07-07',	'34500'	,	'Zakopane',	'Szopena',	'99',		0,	1);
+INSERT INTO tKierowca VALUES
+('W0LGM6EM4B1207861',		'2',		'Tadeusz',	'Sobieski',	'76090319038',	'Warta'	,		'1996-08-09',	'2016-08-08',	'98290'	,	'Warta'	,	'Martensa',	'1',		1,	1);
+INSERT INTO tKierowca VALUES
+('VNKKH98360A150068',		'8',		'Mariusz',	'Zarzycki',	'73010515619',	'Sobiepany',		'1993-06-05',	'2016-08-11',	'35967'	,	'Rzeszow',	'Modrzewiowa',	'9',		1,	1);
+INSERT INTO tKierowca VALUES
+('KLY4A11BDXC291944',		'6',		'Kacper',	'Poniatowski',	'80031107152',	'Opoczno',		'2000-09-10',	'2016-09-09',	'26300'	,	'Opoczno',	'Warszawska',	'57',		0,	1);
+INSERT INTO tKierowca VALUES
+('4V4NC9TH6EN159669',		'3',		'Jeremiasz',	'Walezy',	'75091114673',	'Wieliczka',		'1995-10-11',	'2016-10-10',	'32020'	,	'Wieliczka',	'Jerozolimska',	'66',		1,	1);
+													
+													
+
+
+INSERT INTO tTransport VALUES 
+('1',		'3',		'1',		'6',		'500',	'Widawa',	'Lublin',	'287',		'2015-11-01');
+INSERT INTO tTransport VALUES 
+('2',		'6',		'2',		'7',		'1000',	'Widawa',	'Warszawa',	'189',		'2015-11-02');
+INSERT INTO tTransport VALUES 
+('3',		'7',		'3',		'5',		'6000',	'Madryt', 	'Praga',		'2218',		'2015-11-03');
+INSERT INTO tTransport VALUES 
+('4',		'10',		'1',		'3',		'10000',	'Berlin', 	'Warszawa',	'574',		'2015-11-04');
+INSERT INTO tTransport VALUES 
+('5',		'12',		'2',		'2',		'3050',	'Gdynia',	'Zakopane',	'713',		'2015-11-05');
+INSERT INTO tTransport VALUES 
+('1',		'3',		'1',		'6',		'500',	'Widawa',	'Gdynia',	'405',		'2015-05-01');
+INSERT INTO tTransport VALUES 
+('2',		'3',		'2',		'7',		'1000',	'Widawa',	'Warszawa',	'189',		'2015-06-02');
+INSERT INTO tTransport VALUES 
+('3',		'7',		'3',		'5',		'6000',	'Madryt',	'Praga'	,	'2218',		'2015-03-03');
+
+								
+								
+

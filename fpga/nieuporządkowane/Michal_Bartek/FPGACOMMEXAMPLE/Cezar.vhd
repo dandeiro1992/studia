@@ -1,0 +1,25 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_UNSIGNED.ALL;
+USE IEEE.NUMERIC_STD.ALL;
+
+ENTITY Cezar IS PORT
+(
+DATA_IN :IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+DATA_OUT :OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
+);
+END Cezar;
+ARCHITECTURE ARCH_Cezar OF Cezar IS
+
+BEGIN
+
+DSK1: entity work.Przesuniecie port map(DATA_IN(63 DOWNTO 56),DATA_OUT(63 DOWNTO 56));
+DSK2: entity work.Przesuniecie port map(DATA_IN(55 DOWNTO 48),DATA_OUT(55 DOWNTO 48));
+DSK3: entity work.Przesuniecie port map(DATA_IN(47 DOWNTO 40),DATA_OUT(47 DOWNTO 40));
+DSK4: entity work.Przesuniecie port map(DATA_IN(39 DOWNTO 32),DATA_OUT(39 DOWNTO 32));
+DSK5: entity work.Przesuniecie port map(DATA_IN(31 DOWNTO 24),DATA_OUT(31 DOWNTO 24));
+DSK6: entity work.Przesuniecie port map(DATA_IN(23 DOWNTO 16),DATA_OUT(23 DOWNTO 16));
+DSK7: entity work.Przesuniecie port map(DATA_IN(15 DOWNTO 8),DATA_OUT(15 DOWNTO 8));
+DSK8: entity work.Przesuniecie port map(DATA_IN(7 DOWNTO 0),DATA_OUT(7 DOWNTO 0));
+
+END ARCHITECTURE;

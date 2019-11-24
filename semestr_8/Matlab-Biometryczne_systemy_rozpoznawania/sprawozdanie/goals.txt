@@ -1,0 +1,33 @@
+
+
+goal 1
+%ustawienie parametrów treningu 
+net.trainParam.epochs = 20000;
+net.trainParam.goal=0.000001;
+net.trainParam.min_grad=0.000000001;
+
+
+    %ustawienie parametrów treningu 
+net.trainParam.epochs = 20000;
+net.trainParam.goal=0.00000001;
+net.trainParam.min_grad=0.000000001;
+
+
+
+    %ustawienie parametrów treningu 
+net.trainParam.epochs = 20000;
+net.trainParam.goal=0.0000000001;
+net.trainParam.min_grad=0.000000001;
+
+
+%ustawienie parametrów treningu 
+net.trainParam.epochs = 20000;
+net.trainParam.goal=0.000000000000001;
+net.trainParam.min_grad=0.0000000001;
+
+
+goal 2
+%ustawienie parametrów treningu 
+net.trainParam.epochs = 20000;
+net.trainParam.goal=0.00001;
+net.trainParam.min_grad=0.000000001;

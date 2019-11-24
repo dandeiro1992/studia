@@ -1,0 +1,67 @@
+int buf2 [BUFFSIZE2];
+
+pthread_mutex_t lock2;
+pthread_cond_t notempty2;
+pthread_cond_t notfull2;	
+
+int readposition2, writeposition2;
+
+int itemCount2; //ile jest linii w buforze
+
+void printbuf2()
+{	
+	int i;
+	for (i=0;i<BUFFSIZE2;i++)
+	{
+		printf ("%d %d\n", i , buf2[i]);
+	}
+}
+
+
+void wstaw_do_bufora2(int liczba)
+{
+	pthread_mutex_lock (&lock2); //blokuje bufor zeby wstawiac
+	while(itemCount2==BUFFSIZE2)
+	{
+		pthread_cond_wait(&notfull2,&lock2);	
+	}
+
+	buf[writeposition2]=liczba;
+	printf("watek2 wstawil kolejna liczbe do bufora na pozycji: %d\n" , writeposition2);
+
+	printbuf2();
+	writeposition2++;	
+	if(writeposition2==BUFFSIZE2)
+		writeposition2=0;
+
+	itemCount2++;
+	pthread_cond_signal (&notempty2);
+
+	pthread_mutex_unlock (&lock2);	//odblokowuje buffor
+}
+
+
+int pobierz_z_bufora2()
+{
+	int liczba;
+	pthread_mutex_lock (&lock2); //blokuje bufor zeby wstawiac
+	while(itemCount2==0)
+	{
+		pthread_cond_wait(&notempty2,&lock2);	
+	}
+
+	liczba=buf2[readposition2];
+	buf2[readposition2]=-1;
+	printf("watek3 zabral kolejna liczbe z bufora z pozycji: %d\n" , readposition2);
+	printbuf2();
+	readposition2++;	
+	if(readposition2==BUFFSIZE2)
+		readposition2=0;
+
+	itemCount2--;
+	pthread_cond_signal (&notfull2);
+
+	pthread_mutex_unlock (&lock2);	//odblokowuje buffor
+}
+
+
